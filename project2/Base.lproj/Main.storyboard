@@ -18,6 +18,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuV-n3-EeW">
                                 <rect key="frame" x="84" y="103" width="224" height="114"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="HuV-n3-EeW" secondAttribute="height" multiplier="112:57" id="x2H-ep-6Cg"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="us"/>
                                 <connections>
@@ -46,10 +49,13 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="HuV-n3-EeW" secondAttribute="top" constant="3" id="5Ft-Wm-rjE"/>
                             <constraint firstItem="HuV-n3-EeW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="GfP-H2-QJU"/>
+                            <constraint firstItem="Xiz-e8-uuT" firstAttribute="height" secondItem="HuV-n3-EeW" secondAttribute="height" id="KHh-Wj-zWA"/>
                             <constraint firstItem="nge-0b-QvA" firstAttribute="centerX" secondItem="Xiz-e8-uuT" secondAttribute="centerX" id="PND-CO-f63"/>
                             <constraint firstItem="nge-0b-QvA" firstAttribute="top" secondItem="Xiz-e8-uuT" secondAttribute="bottom" constant="30" id="RJF-Yp-eWa"/>
                             <constraint firstItem="Xiz-e8-uuT" firstAttribute="top" secondItem="HuV-n3-EeW" secondAttribute="bottom" constant="30" id="RdN-gT-JfW"/>
                             <constraint firstItem="Xiz-e8-uuT" firstAttribute="centerX" secondItem="HuV-n3-EeW" secondAttribute="centerX" id="Rzr-bW-RpP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nge-0b-QvA" secondAttribute="bottom" constant="20" id="TVb-rW-DO0"/>
+                            <constraint firstItem="nge-0b-QvA" firstAttribute="height" secondItem="Xiz-e8-uuT" secondAttribute="height" id="UB7-IF-XGn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FIJ-pC-jke"/>
