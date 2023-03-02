@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     var countries = [String]()
     var score = 0
     var correctAns = 0
-    
+    var highScore = 0
     
 
     
@@ -26,6 +26,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Score", style: .plain, target: self, action: #selector(showScore))
+        
+
+
+        
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "High Score: \(highScore)", style: .plain, target: self, action: nil)
+
+        
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
@@ -39,12 +47,25 @@ class ViewController: UIViewController {
         button3.layer.borderColor = UIColor.lightGray.cgColor
         
         
-        askQuestion()
+        askQuestions()
         
-        // Do any additional setup after loading the view.
+        
+        
+        let defaults = UserDefaults.standard
+            if let loadedHighScore = defaults.value(forKey: "highScore") as? Int {
+                highScore = loadedHighScore
+                navigationItem.rightBarButtonItem?.title = "High Score: \(highScore)"
+                print("Successfully loaded high score! It is \(highScore)!")
+            } else {
+                print("Failed to load high score or score not yet saved. High score is \(highScore)...")
+            }
+        
+        
+        
+        
     }
     
-    func askQuestion(action : UIAlertAction! = nil) {
+    func askQuestions(action : UIAlertAction! = nil) {
         
         countries.shuffle()
         
@@ -56,7 +77,7 @@ class ViewController: UIViewController {
         
        let upperCasedCountry = countries[correctAns].uppercased()
         
-        //title = "Guess The Flag Of \(upperCasedCountry)-score:\(score)"
+       
         title = upperCasedCountry
         
        
@@ -65,18 +86,19 @@ class ViewController: UIViewController {
 
     func startNewGame(action: UIAlertAction) {
             score = 0
+        let defaults = UserDefaults.standard
+            defaults.set(highScore, forKey: "highScore")
+            navigationItem.rightBarButtonItem?.title = "High Score: \(highScore)"
             
             
-            askQuestion()
+            askQuestions()
+        
         }
 
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         
         var title: String
-        
-       
-    
         
         if sender.tag == correctAns{
             title = "Correct"
@@ -87,24 +109,48 @@ class ViewController: UIViewController {
                 score -= 1
             }
         
-        if score > 3 {
+        
+       if score >= 20 {
             let finalAlertController = UIAlertController(title: "Game over!", message: "Your score is \(score).", preferredStyle: .alert)
             finalAlertController.addAction(UIAlertAction(title: "Start new game!", style: .default, handler: startNewGame))
             present(finalAlertController, animated: true)
         
-        } else {
+        }else if score > highScore{
+            highScore = score
+            let highScoreAlertController = UIAlertController(title: "Well Done!", message: "you have made a new high score", preferredStyle: .alert)
+            highScoreAlertController.addAction(UIAlertAction(title: "continue", style: .default, handler: nil))
+            present(highScoreAlertController, animated: true)
+            save()
+            askQuestions()
+            navigationItem.rightBarButtonItem?.title = "High Score: \(highScore)"
+           
+
+        }else {
             let alertController = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+            alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestions))
             present(alertController, animated: true)
         }
         
         }
     
     @objc func showScore(){
-        let ScoreAlert = UIAlertController(title: "SCORE", message: nil, preferredStyle: .actionSheet)
-        ScoreAlert.addAction(UIAlertAction(title: "your score is \(score)", style: .default, handler: nil))
+        let ScoreAlert = UIAlertController(title: "SCORE", message: "your score is \(score)", preferredStyle: .actionSheet)
+        ScoreAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(ScoreAlert, animated: true)
     }
+    
+    
+    
+    func save() {
+            let defaults = UserDefaults.standard
+            
+            do {
+                defaults.set(highScore, forKey: "highScore")
+                print("Successfully saved score!")
+            }
+        }
+
+    
     
     }
 
