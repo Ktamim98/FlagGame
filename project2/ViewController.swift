@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     @IBOutlet var button2: UIButton!
     @IBOutlet var button3: UIButton!
     
+   
+    
     var countries = [String]()
     var score = 0
     var correctAns = 0
@@ -107,6 +109,14 @@ class ViewController: UIViewController {
         } else {
             title = "Wrong! That's the flag of \(countries[sender.tag].uppercased())"
                 score -= 1
+            }
+        
+        UIView.animate(withDuration: 0.1, animations: {
+                sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            }) { finished in
+                UIView.animate(withDuration: 0.1) {
+                    sender.transform = CGAffineTransform.identity
+                }
             }
         
         
