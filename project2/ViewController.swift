@@ -27,15 +27,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Score", style: .plain, target: self, action: #selector(showScore))
+      let left1 = UIBarButtonItem(title: "Score", style: .plain, target: self, action: #selector(showScore))
+      let left2 = UIBarButtonItem(title: "🔔", style: .plain, target: self, action: #selector(scheduleLocal))
         
 
-
+            navigationItem.leftBarButtonItems = [left1, left2]
         
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "High Score: \(highScore)", style: .plain, target: self, action: nil)
-
+        let right1 = UIBarButtonItem(title: "High Score: \(highScore)", style: .plain, target: self, action: nil)
+//        let right2 = UIBarButtonItem(title: "register", style: .plain, target: self, action: #selector(registerLocal))
         
+        
+            navigationItem.rightBarButtonItems = [right1]
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         
@@ -159,6 +162,53 @@ class ViewController: UIViewController {
                 print("Successfully saved score!")
             }
         }
+    
+    @objc func scheduleLocal(){
+           
+           
+           
+           
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]){
+            (granted, error) in
+            if granted {
+                print("noice!")
+            }else{
+                    print("oh, no!")
+                }
+            }
+           center.removeAllPendingNotificationRequests()
+           
+           let content = UNMutableNotificationContent()
+           content.title = "let's back to game"
+           content.body = "since it's been 5 sec your not playing.stop what are you doing right now and play the game you idot"
+           content.categoryIdentifier = "alarm"
+           content.sound = UNNotificationSound.default
+           
+           
+          
+           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+          
+           
+           let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+           center.add(request)
+           
+           
+       }
+//    @objc func registerLocal(){
+//
+//            let center = UNUserNotificationCenter.current()
+//
+//            center.requestAuthorization(options: [.alert, .badge, .sound]){
+//                (granted, error) in
+//                if granted {
+//                    print("noice!")
+//                }else{
+//                        print("oh, no!")
+//                    }
+//                }
+//
+//        }
 
     
     
